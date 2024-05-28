@@ -4,23 +4,29 @@ var content2 = document.getElementById('content2');
 
 
 //音声認識APIの使用
+
 window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
+
+if (!('webkitSpeechRecognition' in window)) {
+  alert("お使いのブラウザは音声認識APIをサポートしていません。");
+} else {
 var speech = new webkitSpeechRecognition();
 //言語を日本語に設定
 speech.lang = "ja";
 
-btn.addEventListener( 'click' , function() {
-    // ➀ボタンをクリックした時の処理
-   // 音声認識をスタート
-   speech.start();
-   $('#black').fadeIn().animate({'opacity':0.7},550);
-
-
-} );
+btn.addEventListener('click', function() {
+  try {
+      speech.start();
+      $('#black').fadeIn().animate({'opacity':0.7},550);
+  } catch (e) {
+      console.error(e);
+      alert("音声認識の開始に失敗しました: " + e.message);
+  }
+});
 //終了判定
-speech.onnomatch = function(){
-    $('#black').fadeOut().animate({'opacity':0},550);
-};
+speech.addEventListener('nomatch', function() {
+  $('#black').fadeOut().animate({'opacity':0},550);
+});
 
 speech.addEventListener( 'result' , function( e ) {
     // ➁音声認識した結果を得る処理
@@ -112,12 +118,6 @@ function getSeren() {
         },1300); 
     }
 
-function getSeren() {
-    $('#content').addClass("flash");
-        setTimeout(function(){
-            location = './seren.html';  
-         },1300); 
-    }
 function getIzac() {
    $('#content').addClass("flash");
         setTimeout(function(){
@@ -145,6 +145,7 @@ function getRock() {
             location = './rock.html';  
         },1300); 
       }  
+}
 
 $(".openbtn").click(function () {
     $(this).toggleClass('active');
