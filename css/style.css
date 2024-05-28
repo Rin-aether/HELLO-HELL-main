@@ -2053,8 +2053,10 @@ margin-bottom: 5px;
   margin: 42px 18px;
 }
 .decide{
-  bottom: -8%;
-  left: 25%;
+  position: static;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
   width: 50vw;
   font-size: 16px;
   padding: 7px 14px;
@@ -2087,7 +2089,7 @@ margin-bottom: 5px;
   height: 40px;
   position: absolute;
   left: 20px;
-  bottom: -12%;
+  bottom: -10%;
 }
 #remove-text {
   width: 80px;
